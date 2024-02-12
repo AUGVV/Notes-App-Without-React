@@ -1,6 +1,10 @@
 var NotificationList = [];
 var CreatedNotes = 0;
 
+function AppSettings(isLightMode) {
+    this.IsLightMode = isLightMode;
+}
+
 function note(Id, Title, Desc) {
     this.Id = Id;
     this.Title = Title;
@@ -11,12 +15,25 @@ window.onload = function () {
     let container = document.getElementById('note-container');
     let button = document.getElementById('add-button');
 
-    let json = sessionStorage.getItem('notes');
-    if (json === null) {
+    let notesJson = sessionStorage.getItem('notes');
+    if (notesJson === null) {
         return;
     }
 
-    NotificationList = JSON.parse(json)
+    let settingsJson = sessionStorage.getItem('notesAppConfigs');
+    if (settingsJson === null) {
+        return;
+    }
+
+    Settings = JSON.parse(settingsJson);
+    if (Settings.IsLightMode) {
+        document.body.classList.add("light-theme");
+    }
+    else {
+        document.body.classList.remove("light-theme");
+    }
+
+    NotificationList = JSON.parse(notesJson);
     if (NotificationList.length === 0) {
         return;
     }
@@ -92,8 +109,7 @@ function ChangeNoteData(tag, noteId, type) {
     if (type === 'title') {
         object.Title = tag.value;
     }
-    else if (type = 'desc')
-    {
+    else if (type = 'desc') {
         object.Desc = tag.value;
     }
 }
@@ -104,4 +120,9 @@ function GetCurrentId(noteId) {
 
 function SaveAllNotes() {
     sessionStorage.setItem('notes', JSON.stringify(NotificationList));
+}
+
+function ChangeTheme() {
+   var currentState = document.body.classList.toggle("light-theme")
+   sessionStorage.setItem('notesAppConfigs', JSON.stringify(new AppSettings(currentState)));
 }

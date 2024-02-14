@@ -15,30 +15,26 @@ window.onload = function () {
     let container = document.getElementById('note-container');
     let button = document.getElementById('add-button');
 
-    let notesJson = sessionStorage.getItem('notes');
-    if (notesJson === null) {
-        return;
-    }
-
     let settingsJson = sessionStorage.getItem('notesAppConfigs');
-    if (settingsJson === null) {
-        return;
+    let notesJson = sessionStorage.getItem('notes');
+
+    if (settingsJson != null) {
+        let settings = JSON.parse(settingsJson);
+        if (settings.IsLightMode) {
+            document.body.classList.add("light-theme");
+        }
+        else {
+            document.body.classList.remove("light-theme");
+        }
     }
 
-    Settings = JSON.parse(settingsJson);
-    if (Settings.IsLightMode) {
-        document.body.classList.add("light-theme");
+    if (notesJson != null) {
+        NotificationList = JSON.parse(notesJson);
+        if (NotificationList.length != 0) {
+            CreatedNotes = Math.max.apply(Math, NotificationList.map(it => it.Id));
+            NotificationList.map((it => container.appendChild(CreateNote(it.Id, it.Title, it.Desc)).after(button)));
+        }
     }
-    else {
-        document.body.classList.remove("light-theme");
-    }
-
-    NotificationList = JSON.parse(notesJson);
-    if (NotificationList.length === 0) {
-        return;
-    }
-    CreatedNotes = Math.max.apply(Math, NotificationList.map(it => it.Id));
-    NotificationList.map((it => container.appendChild(CreateNote(it.Id, it.Title, it.Desc)).after(button)));
 };
 
 function CreateNewNote(button, containerId) {

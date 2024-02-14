@@ -12,9 +12,6 @@ function note(Id, Title, Desc) {
 }
 
 window.onload = function () {
-    let container = document.getElementById('note-container');
-    let button = document.getElementById('add-button');
-
     let settingsJson = sessionStorage.getItem('notesAppConfigs');
     let notesJson = sessionStorage.getItem('notes');
 
@@ -31,6 +28,9 @@ window.onload = function () {
     if (notesJson != null) {
         NotificationList = JSON.parse(notesJson);
         if (NotificationList.length != 0) {
+            let container = document.getElementById('note-container');
+            let button = document.getElementById('add-button');
+
             CreatedNotes = Math.max.apply(Math, NotificationList.map(it => it.Id));
             NotificationList.map((it => container.appendChild(CreateNote(it.Id, it.Title, it.Desc)).after(button)));
         }

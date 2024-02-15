@@ -1,6 +1,10 @@
 var NotificationList = [];
 var CreatedNotes = 0;
 
+function AppSettings(isLightMode) {
+    this.IsLightMode = isLightMode;
+}
+
 function note(Id, Title, Desc) {
     this.Id = Id;
     this.Title = Title;
@@ -8,20 +12,29 @@ function note(Id, Title, Desc) {
 }
 
 window.onload = function () {
-    let container = document.getElementById('note-container');
-    let button = document.getElementById('add-button');
+    let settingsJson = sessionStorage.getItem('notesAppConfigs');
+    let notesJson = sessionStorage.getItem('notes');
 
-    let json = sessionStorage.getItem('notes');
-    if (json === null) {
-        return;
+    if (settingsJson != null) {
+        let settings = JSON.parse(settingsJson);
+        if (settings.IsLightMode) {
+            document.body.classList.add("light-theme");
+        }
+        else {
+            document.body.classList.remove("light-theme");
+        }
     }
 
-    NotificationList = JSON.parse(json)
-    if (NotificationList.length === 0) {
-        return;
+    if (notesJson != null) {
+        NotificationList = JSON.parse(notesJson);
+        if (NotificationList.length != 0) {
+            let container = document.getElementById('note-container');
+            let button = document.getElementById('add-button');
+
+            CreatedNotes = Math.max.apply(Math, NotificationList.map(it => it.Id));
+            NotificationList.map((it => container.appendChild(CreateNote(it.Id, it.Title, it.Desc)).after(button)));
+        }
     }
-    CreatedNotes = Math.max.apply(Math, NotificationList.map(it => it.Id));
-    NotificationList.map((it => container.appendChild(CreateNote(it.Id, it.Title, it.Desc)).after(button)));
 };
 
 function CreateNewNote(button, containerId) {
@@ -92,8 +105,7 @@ function ChangeNoteData(tag, noteId, type) {
     if (type === 'title') {
         object.Title = tag.value;
     }
-    else if (type = 'desc')
-    {
+    else if (type = 'desc') {
         object.Desc = tag.value;
     }
 }
@@ -104,4 +116,9 @@ function GetCurrentId(noteId) {
 
 function SaveAllNotes() {
     sessionStorage.setItem('notes', JSON.stringify(NotificationList));
+}
+
+function ChangeTheme() {
+   var currentState = document.body.classList.toggle("light-theme")
+   sessionStorage.setItem('notesAppConfigs', JSON.stringify(new AppSettings(currentState)));
 }

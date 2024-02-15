@@ -3,6 +3,17 @@
     padding: 0px;
 }
 
+:root {
+    --main-color-theme: #6587c9;
+    --main-color-theme-background: #282c34;
+    --main-color-theme-section: #e8eff9;
+    --text-color: white;
+    --animation-color: #4E535B;
+    --description-scroll-color: #79889d;
+    --button-center-color: #343943;
+    --light-mode-image: url(images//day-mode.svg) center no-repeat;
+}
+
 html {
     height: 100%;
     overflow-x: hidden;
@@ -11,14 +22,14 @@ html {
 body {
     display: flex;
     flex-direction: column;
-    background-color: #282c34;
+    background-color: var(--main-color-theme-background);
     margin: 0px;
     padding: 0px;
     height: 100%;
 }
 
 header, footer {
-    background-color: #6587c9;
+    background-color: var(--main-color-theme);
 }
 
 main {
@@ -26,18 +37,23 @@ main {
     position: relative;
 }
 
-h1 {
+h1, h2 {
     white-space: nowrap;
-    color: white;
+    color: var(--text-color);
 }
 
-p, a, pre {
-    color: white;
+p, a, pre, li {
+    color: var(--text-color);
+    font-family: serif;
 }
+
+    a:hover {
+        color:blue;
+    }
 
 section {
     transition: 1s;
-    background-color: #e8eff9;
+    background-color: var(--main-color-theme-section);
 }
 
 nav {
@@ -53,6 +69,16 @@ nav {
     display: flex;
     justify-content: space-between;
     padding: 5px 10px;
+}
+
+.light-theme {
+    --main-color-theme: #dfdfdf;
+    --main-color-theme-background: #b8ebffc7;
+    --main-color-theme-section: #ffe380;
+    --text-color: black;
+    --animation-color: #84a7df;
+    --button-center-color: #a4e5ff;
+    --light-mode-image: url(images//night-mode.svg) center no-repeat;
 }
 
 .search-input {
@@ -76,6 +102,26 @@ nav {
         transition: 1ms;
     }
 
+    .save-button:hover {
+        filter: blur(0.5px);
+    }
+
+.button-container {
+    white-space: nowrap;
+}
+
+.theme-button {
+    min-height: 35px;
+    min-width: 35px;
+    border: none;
+    background: var(--light-mode-image);
+    margin-left: 10px;
+}
+
+    .theme-button:hover {
+        filter: blur(0.5px);
+    }
+
 .container {
     position: absolute;
     display: flex;
@@ -84,8 +130,32 @@ nav {
     flex-direction: row;
     overflow-y: scroll;
     height: 100%;
+    width: 100%;
     align-content: flex-start;
 }
+
+
+.author-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    height: 100%;
+    text-align: center;
+}
+
+    .author-container ul li {
+        text-align: left;
+        margin-left: 25px
+    }
+
+.list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 
     .container::-webkit-scrollbar {
         width: 11px;
@@ -93,11 +163,11 @@ nav {
 
     .container::-webkit-scrollbar-track {
         border-block: solid;
-        border-color: #6587c9;
+        border-color: var(--main-color-theme);
     }
 
     .container::-webkit-scrollbar-thumb {
-        background-color: #6587c9;
+        background-color: var(--main-color-theme);
     }
 
 .notes-sizes {
@@ -111,21 +181,21 @@ nav {
 
 .add-button {
     border-style: dashed;
-    border-color: white;
+    border-color: var(--text-color);
     background-color: transparent;
     transition: 1s;
 }
 
     .add-button:hover {
         transition: 1s;
-        background-color: #4E535B;
+        background-color: var(--animation-color);
     }
 
 .button-style {
     border-radius: 50%;
+    background-color: var(--button-center-color);
     width: 60px;
     height: 60px;
-    background-color: #343943;
     margin: auto;
     display: -webkit-box;
 }
@@ -141,14 +211,14 @@ nav {
     width: 165px;
     border: none;
     font-size: 16px;
-    background-color: #e8eff9;
+    background-color: transparent;
     font-weight: bold;
     text-overflow: ellipsis;
 }
 
 .description {
     border: none;
-    background-color: #e8eff9;
+    background-color: transparent;
     margin-left: 5px;
     width: -webkit-fill-available;
     height: 235px;
@@ -161,11 +231,11 @@ nav {
 
     .description::-webkit-scrollbar-track {
         border-block: solid;
-        border-color: #79889d;
+        border-color: var(--description-scroll-color);
     }
 
     .description::-webkit-scrollbar-thumb {
-        background-color: #79889d;
+        background-color: var(--description-scroll-color);
     }
 
 textarea:focus, input:focus {

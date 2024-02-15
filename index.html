@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <head>
     <title>Page app</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <link rel="shortcut icon" href="images/favicon.ico" sizes="32x32" type="image/x-icon" />
-    <link href="style.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet" />
 </head>
 <body>
     <header>
         <div id="header-container">
             <h1>Notes app</h1>
-            <input class="search-input" oninput="InitNotes(this, 'note-container', 'add-button')" />
-            <button class="save-button" onclick="SaveAllNotes()" />
+            <input class="search-input" placeholder="Search by title" oninput="InitNotes(this, 'note-container', 'add-button')" />
+            <div class="button-container">
+                <button class="save-button" onclick="SaveAllNotes()"/>
+                <button class="theme-button" onclick="ChangeTheme()"/>
+            </div>
         </div>
     </header>
     <main>
@@ -26,9 +29,9 @@
     </main>
     <footer>
         <nav>
-            <pre>main-page (you are here)</pre>
+            <pre>main-page</pre>
             <pre> | </pre>
-            <a>author</a>
+            <a href="author.html">author</a>
         </nav>
     </footer>
 </body>
